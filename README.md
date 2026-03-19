@@ -42,15 +42,36 @@ Traversal contracts also included:
 
 ## Requirements
 
-This repo is source-first today and does not yet include packaging metadata such as `pyproject.toml`.
-
-Install the runtime dependencies in your own environment:
+Install from a local checkout:
 
 ```bash
-pip install pydantic httpx fastapi
+pip install .
 ```
 
-Then run Python from this checkout, for example with `PYTHONPATH=.` or by vendoring the package into your project.
+Once published to PyPI, the intended install command is:
+
+```bash
+pip install cap-protocol
+```
+
+Base installation includes the core models and async HTTP client. If you also want the FastAPI server adapter, install the optional server extra:
+
+```bash
+pip install "cap-protocol[server]"
+```
+
+The package keeps the import surface you asked for:
+
+```python
+from cap_protocol.core import (
+    ASSUMPTION_CAUSAL_SUFFICIENCY,
+    ASSUMPTION_FAITHFULNESS,
+    ASSUMPTION_LINEARITY,
+    ASSUMPTION_NO_INSTANTANEOUS_EFFECTS,
+    ASSUMPTION_NO_LATENT_CONFOUNDERS_ADDRESSED,
+)
+from cap_protocol.core.disclosure import sanitize_fields
+```
 
 ## Client Example
 

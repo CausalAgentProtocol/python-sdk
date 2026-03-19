@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cap-protocol"
+version = "0.1.0"
+description = "Python SDK scaffold for the Causal Agent Protocol"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "LicenseRef-Proprietary"
+authors = [
+  { name = "CausalAgentProtocol" },
+]
+dependencies = [
+  "httpx>=0.24,<1",
+  "pydantic>=2,<3",
+]
+keywords = ["causal", "protocol", "sdk", "cap", "agents"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+server = [
+  "fastapi>=0.100,<1",
+]
+
+[project.urls]
+Homepage = "https://github.com/CausalAgentProtocol/python-sdk"
+Repository = "https://github.com/CausalAgentProtocol/python-sdk"
+
+[tool.setuptools.packages.find]
+include = ["cap_protocol*"]
+
+[tool.setuptools.package-data]
+cap_protocol = ["py.typed"]
