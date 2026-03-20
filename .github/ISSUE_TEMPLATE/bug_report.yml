@@ -1,0 +1,61 @@
+name: Bug report
+description: Report a reproducible defect in the CAP Python SDK
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report.
+
+        Please include enough detail for us to reproduce the behavior from the repository state alone.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: What is going wrong?
+      placeholder: graph.neighbors response validation fails when...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Exact steps to reproduce the issue
+      placeholder: |
+        1. Install the package with ...
+        2. Run ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Python version, package version, OS, and any relevant framework details
+      placeholder: |
+        Python:
+        cap-protocol:
+        OS:
+        Framework:
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Traceback or validation output
+      description: Paste the relevant error output
+      render: shell
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Links, code snippets, payload examples, or related issues
