@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from cap_protocol.core.constants import CAPABILITY_CARD_SCHEMA_URL, CAP_VERSION
+from cap.core.constants import CAPABILITY_CARD_SCHEMA_URL, CAP_VERSION
 
 
 class CapabilityProvider(BaseModel):

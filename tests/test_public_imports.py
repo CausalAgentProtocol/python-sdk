@@ -1,11 +1,11 @@
-from cap_protocol.core import (
+from cap.core import (
     ASSUMPTION_CAUSAL_SUFFICIENCY,
     ASSUMPTION_FAITHFULNESS,
     ASSUMPTION_LINEARITY,
     ASSUMPTION_NO_INSTANTANEOUS_EFFECTS,
     ASSUMPTION_NO_LATENT_CONFOUNDERS_ADDRESSED,
 )
-from cap_protocol.core.disclosure import sanitize_fields
+from cap.core.disclosure import sanitize_fields
 
 
 def test_core_re_exports() -> None:

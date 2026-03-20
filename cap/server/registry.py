@@ -7,8 +7,8 @@ from typing import Any, Literal, Mapping
 
 from pydantic import BaseModel
 
-from cap_protocol.server.responses import CAPHandlerSuccessSpec
-from cap_protocol.server.contracts import CAPVerbContract
+from cap.server.responses import CAPHandlerSuccessSpec
+from cap.server.contracts import CAPVerbContract
 
 _CORE_VERB_PATTERN = re.compile(r"^[a-z0-9_]+\.[a-z0-9_]+$")
 _EXTENSION_NAMESPACE_PATTERN = re.compile(r"^[a-z0-9_]+$")

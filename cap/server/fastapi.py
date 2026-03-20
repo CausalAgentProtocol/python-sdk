@@ -8,13 +8,13 @@ from fastapi import Request
 from fastapi.exceptions import RequestValidationError
 from pydantic import ValidationError
 
-from cap_protocol.core.errors import CAPErrorBody, CAPHTTPError
-from cap_protocol.server.responses import (
+from cap.core.errors import CAPErrorBody, CAPHTTPError
+from cap.server.responses import (
     CAPHandlerSuccessSpec,
     CAPProvenanceContext,
     reduce_handler_success,
 )
-from cap_protocol.server.registry import CAPDispatchHandler, CAPVerbRegistry
+from cap.server.registry import CAPDispatchHandler, CAPVerbRegistry
 
 def build_fastapi_cap_dispatcher(
     *,

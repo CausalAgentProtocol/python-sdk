@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from pydantic import BaseModel
 
-from cap_protocol.core.contracts import (
+from cap.core.contracts import (
     GraphMarkovBlanketRequest,
     GraphMarkovBlanketResponse,
     GraphNeighborsRequest,

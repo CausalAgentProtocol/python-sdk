@@ -7,7 +7,7 @@ from typing import Any, Literal, TypeVar, cast
 import httpx
 from pydantic import BaseModel
 
-from cap_protocol.core.builders import (
+from cap.core.builders import (
     build_graph_markov_blanket_request,
     build_graph_neighbors_request,
     build_graph_paths_request,
@@ -17,7 +17,7 @@ from cap_protocol.core.builders import (
     build_traverse_children_request,
     build_traverse_parents_request,
 )
-from cap_protocol.core.contracts import (
+from cap.core.contracts import (
     GraphMarkovBlanketResponse,
     GraphNeighborsResponse,
     GraphPathsResponse,
@@ -26,13 +26,13 @@ from cap_protocol.core.contracts import (
     ObservePredictResponse,
     TraverseResponse,
 )
-from cap_protocol.core.envelopes import (
+from cap.core.envelopes import (
     CAPGraphRef,
     CAPRequestBase,
     CAPRequestContext,
     CAPRequestOptions,
 )
-from cap_protocol.core.errors import CAPErrorBody, CAPErrorResponse, CAPHTTPError
+from cap.core.errors import CAPErrorBody, CAPErrorResponse, CAPHTTPError
 
 ResponseT = TypeVar("ResponseT", bound=BaseModel)
 

@@ -7,8 +7,8 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from cap_protocol.core.envelopes import build_error_payload, normalize_request_id
-from cap_protocol.core.errors import CAPErrorBody, CAPErrorCode, CAPHTTPError
+from cap.core.envelopes import build_error_payload, normalize_request_id
+from cap.core.errors import CAPErrorBody, CAPErrorCode, CAPHTTPError
 
 
 class CAPAdapterError(Exception):

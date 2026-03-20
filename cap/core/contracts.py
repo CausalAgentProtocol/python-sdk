@@ -4,8 +4,8 @@ from typing import Generic, Literal, TypeVar
 
 from pydantic import BaseModel, Field
 
-from cap_protocol.core.capability_card import CapabilityCard
-from cap_protocol.core.envelopes import CAPRequestBase, CAPResponseBase
+from cap.core.capability_card import CapabilityCard
+from cap.core.envelopes import CAPRequestBase, CAPResponseBase
 
 
 class CAPProvenance(BaseModel):

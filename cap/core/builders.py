@@ -3,12 +3,12 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import Any, Literal, cast
 
-from cap_protocol.core.capability_card import (
+from cap.core.capability_card import (
     CapabilityAccessTier,
     CapabilityDisclosurePolicy,
     CapabilityExtensionNamespace,
 )
-from cap_protocol.core.contracts import (
+from cap.core.contracts import (
     GraphMarkovBlanketParams,
     GraphMarkovBlanketRequest,
     GraphNeighborsParams,
@@ -24,7 +24,7 @@ from cap_protocol.core.contracts import (
     TraverseChildrenRequest,
     TraverseParentsRequest,
 )
-from cap_protocol.core.envelopes import CAPGraphRef, CAPRequestContext, CAPRequestOptions
+from cap.core.envelopes import CAPGraphRef, CAPRequestContext, CAPRequestOptions
 
 
 def _request_kwargs(

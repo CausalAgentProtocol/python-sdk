@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cap-protocol"
-version = "0.1.0"
+version = "1.0.0"
 description = "Python SDK scaffold for the Causal Agent Protocol"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -38,7 +38,7 @@ Homepage = "https://github.com/CausalAgentProtocol/python-sdk"
 Repository = "https://github.com/CausalAgentProtocol/python-sdk"
 
 [tool.setuptools.packages.find]
-include = ["cap_protocol*"]
+include = ["cap", "cap.*"]
 
 [tool.setuptools.package-data]
-cap_protocol = ["py.typed"]
+cap = ["py.typed"]

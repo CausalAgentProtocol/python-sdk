@@ -6,9 +6,9 @@ from typing import Any, Protocol
 
 from pydantic import BaseModel
 
-from cap_protocol.core.constants import CAP_VERSION
-from cap_protocol.core.contracts import CAPProvenance
-from cap_protocol.core.envelopes import build_success_payload, normalize_request_id
+from cap.core.constants import CAP_VERSION
+from cap.core.contracts import CAPProvenance
+from cap.core.envelopes import build_success_payload, normalize_request_id
 
 
 class CAPRequestEnvelopeLike(Protocol):

@@ -1,4 +1,4 @@
-from cap_protocol.core.canonical import (
+from cap.core.canonical import (
     ALGORITHM_PCMCI,
     ASSUMPTION_CAUSAL_SUFFICIENCY,
     ASSUMPTION_FAITHFULNESS,
@@ -20,7 +20,7 @@ from cap_protocol.core.canonical import (
     REASONING_MODE_STRUCTURAL_SEMANTICS,
     REASONING_MODE_VALIDATION_GATE,
 )
-from cap_protocol.core.capability_card import (
+from cap.core.capability_card import (
     CapabilityAccessTier,
     CapabilityA2ABinding,
     CapabilityAuthentication,
@@ -36,7 +36,7 @@ from cap_protocol.core.capability_card import (
     CapabilityStructuralMechanisms,
     CapabilitySupportedVerbs,
 )
-from cap_protocol.core.builders import (
+from cap.core.builders import (
     build_capability_access_tier,
     build_capability_disclosure_policy,
     build_extension_namespace,
@@ -49,8 +49,8 @@ from cap_protocol.core.builders import (
     build_traverse_children_request,
     build_traverse_parents_request,
 )
-from cap_protocol.core.constants import CAPABILITY_CARD_SCHEMA_URL, CAP_VERSION
-from cap_protocol.core.contracts import (
+from cap.core.constants import CAPABILITY_CARD_SCHEMA_URL, CAP_VERSION
+from cap.core.contracts import (
     CAPProvenance,
     CAPProvenancedSuccessResponse,
     CAPSuccessResponse,
@@ -87,8 +87,8 @@ from cap_protocol.core.contracts import (
     TraverseResponse,
     TraverseResult,
 )
-from cap_protocol.core.disclosure import sanitize_fields
-from cap_protocol.core.envelopes import (
+from cap.core.disclosure import sanitize_fields
+from cap.core.envelopes import (
     CAPGraphRef,
     CAPRequestBase,
     CAPRequestContext,
@@ -98,7 +98,7 @@ from cap_protocol.core.envelopes import (
     build_success_payload,
     normalize_request_id,
 )
-from cap_protocol.core.errors import (
+from cap.core.errors import (
     CAPErrorBody,
     CAPErrorCode,
     CAPErrorResponse,

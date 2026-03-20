@@ -12,15 +12,15 @@ This repository currently provides:
 
 ## Package Layout
 
-`cap_protocol/core`
+`cap/core`
 
 - Protocol constants, request/response envelopes, contracts, builders, errors, and capability card models
 
-`cap_protocol/client`
+`cap/client`
 
 - `AsyncCAPClient` and route helpers for calling a CAP endpoint
 
-`cap_protocol/server`
+`cap/server`
 
 - Verb contracts, registry utilities, FastAPI dispatch adapter, and response/error helpers for implementing a CAP server
 
@@ -48,11 +48,13 @@ Install from a local checkout:
 pip install .
 ```
 
-Once published to PyPI, the intended install command is:
+Once published to PyPI, install with:
 
 ```bash
 pip install cap-protocol
 ```
+
+The distribution name on PyPI is `cap-protocol`, but the Python import package is `cap`.
 
 Base installation includes the core models and async HTTP client. If you also want the FastAPI server adapter, install the optional server extra:
 
@@ -63,14 +65,14 @@ pip install "cap-protocol[server]"
 The package keeps the import surface you asked for:
 
 ```python
-from cap_protocol.core import (
+from cap.core import (
     ASSUMPTION_CAUSAL_SUFFICIENCY,
     ASSUMPTION_FAITHFULNESS,
     ASSUMPTION_LINEARITY,
     ASSUMPTION_NO_INSTANTANEOUS_EFFECTS,
     ASSUMPTION_NO_LATENT_CONFOUNDERS_ADDRESSED,
 )
-from cap_protocol.core.disclosure import sanitize_fields
+from cap.core.disclosure import sanitize_fields
 ```
 
 ## Client Example
@@ -78,7 +80,7 @@ from cap_protocol.core.disclosure import sanitize_fields
 ```python
 import asyncio
 
-from cap_protocol.client import AsyncCAPClient
+from cap.client import AsyncCAPClient
 
 
 async def main() -> None:
@@ -107,7 +109,7 @@ You can also call verbs dynamically with `request_verb(...)` or route aliases wi
 ```python
 from fastapi import FastAPI, Request
 
-from cap_protocol.server import (
+from cap.server import (
     GRAPH_NEIGHBORS_CONTRACT,
     CAPVerbRegistry,
     build_fastapi_cap_dispatcher,

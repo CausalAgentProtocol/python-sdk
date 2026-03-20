@@ -5,7 +5,7 @@ from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
-from cap_protocol.core.constants import CAP_VERSION
+from cap.core.constants import CAP_VERSION
 
 
 class CAPGraphRef(BaseModel):
