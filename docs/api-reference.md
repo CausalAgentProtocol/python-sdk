@@ -140,7 +140,7 @@ The client package exposes:
 `CAPClientRoutes` currently maps all verbs to one endpoint path by default:
 
 ```python
-CAPClientRoutes(single_entry_path="/api/v1/cap")
+CAPClientRoutes(single_entry_path="/cap")
 ```
 
 Important methods:

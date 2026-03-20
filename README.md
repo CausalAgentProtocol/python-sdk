@@ -140,7 +140,7 @@ dispatch = build_fastapi_cap_dispatcher(
 register_cap_exception_handlers(app)
 
 
-@app.post("/api/v1/cap")
+@app.post("/cap")
 async def cap_endpoint(payload: dict, request: Request):
     return await dispatch(payload, request)
 ```

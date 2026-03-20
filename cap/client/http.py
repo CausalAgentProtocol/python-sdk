@@ -86,7 +86,7 @@ DEFAULT_CLIENT_VERBS = {
 
 @dataclass(frozen=True)
 class CAPClientRoutes:
-    single_entry_path: str = "/api/v1/cap"
+    single_entry_path: str = "/cap"
 
     def resolve(self, verb: str) -> str:
         return _normalize_path(self.single_entry_path)
