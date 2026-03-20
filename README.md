@@ -34,25 +34,39 @@ The repository currently ships models and helpers for:
 
 ## Installation
 
-Install the base package from a local checkout:
+### From Source
 
 ```bash
 pip install .
 ```
 
-Once published, the intended PyPI distribution name is:
+If you also need the FastAPI server adapter:
+
+```bash
+pip install ".[server]"
+```
+
+For local development:
+
+```bash
+pip install -e ".[server,dev]"
+```
+
+### From PyPI
+
+When published, the distribution name is `cap-protocol`:
 
 ```bash
 pip install cap-protocol
 ```
 
-The import package name is `cap`.
-
-If you also need the FastAPI server adapter, install the optional extra:
+Install the optional server extra with:
 
 ```bash
 pip install "cap-protocol[server]"
 ```
+
+The Python import package name is `cap`.
 
 ## Quick Start
 
