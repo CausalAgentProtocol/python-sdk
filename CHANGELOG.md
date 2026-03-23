@@ -8,6 +8,8 @@ This public changelog starts with the repository documentation and project-metad
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-03-23
+
 ### Added
 
 - capability-card extension metadata can now describe extension-only result fields through `CapabilityExtensionNamespace.additional_result_fields`
@@ -16,6 +18,7 @@ This public changelog starts with the repository documentation and project-metad
 
 - sanitized FastAPI validation error contexts before serializing CAP error responses, so embedded exception objects no longer break JSON responses
 - checked out the repository in the GitHub Release job so `gh release create --verify-tag` can resolve the local `.git` metadata; the initial `1.0.2` automation published to PyPI successfully but failed while creating the GitHub Release
+- explicitly excluded local `uv.lock` files from source distribution inputs for release hygiene
 
 ## [1.0.2] - 2026-03-23
 
