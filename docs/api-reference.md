@@ -117,6 +117,8 @@ If you implement `meta.capabilities`, you will usually touch:
 - `CapabilityA2ABinding`
 - `CapabilityExtensionNamespace`
 
+`CapabilityExtensionNamespace` supports both `additional_params` and `additional_result_fields` so capability cards can describe extension-specific request inputs and non-core result fields.
+
 ### Errors and disclosure
 
 Error types:

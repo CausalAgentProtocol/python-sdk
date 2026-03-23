@@ -218,6 +218,7 @@ def build_extension_namespace(
     schema_url: str,
     verbs: Sequence[str],
     additional_params: Mapping[str, Mapping[str, str]] | None = None,
+    additional_result_fields: Mapping[str, Mapping[str, str]] | None = None,
     notes: Sequence[str] = (),
 ) -> CapabilityExtensionNamespace:
     return CapabilityExtensionNamespace(
@@ -225,6 +226,9 @@ def build_extension_namespace(
         verbs=list(verbs),
         additional_params={
             verb: dict(params) for verb, params in (additional_params or {}).items()
+        },
+        additional_result_fields={
+            verb: dict(fields) for verb, fields in (additional_result_fields or {}).items()
         },
         notes=list(notes),
     )
