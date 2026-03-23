@@ -43,6 +43,21 @@ The repository includes [`.github/workflows/ci.yml`](../.github/workflows/ci.yml
 
 If you add optional dependencies, supported Python versions, or new test entry points, update the workflow accordingly.
 
+## Release Automation
+
+Public package releases are handled by [`.github/workflows/release.yml`](../.github/workflows/release.yml).
+
+That workflow is intentionally tag-driven rather than branch-driven:
+
+- pushing a `vX.Y.Z` tag builds the package, checks distribution metadata, publishes to PyPI, and creates a GitHub Release
+- the workflow validates that the Git tag matches `project.version` in `pyproject.toml`
+- the PyPI publish job uses a Trusted Publisher configuration instead of a long-lived API token
+- `workflow_dispatch` is available for maintainers who want to run the build job manually without publishing
+
+The repository may still use a `release` branch as a coordination branch, but the branch itself does not publish anything. The actual release event is the version tag.
+
+Use [releasing.md](releasing.md) for the one-time PyPI setup and the step-by-step release procedure.
+
 ## Packaging Notes
 
 Build configuration lives in `pyproject.toml`.
@@ -59,8 +74,10 @@ Before a public release, maintainers should also verify:
 - license metadata and `LICENSE` file contents stay aligned
 - repository URLs
 - version bump policy
-- release notes or changelog process
+- changelog updates and release notes inputs
 - security reporting path in `SECURITY.md`
+
+For the actual release sequence, follow [releasing.md](releasing.md) instead of improvising the package upload steps.
 
 ## Common Change Paths
 
