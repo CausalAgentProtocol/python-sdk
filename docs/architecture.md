@@ -179,7 +179,7 @@ The registry also enforces naming rules:
 
 The FastAPI dispatcher extracts `payload["verb"]`, finds the matching `DispatchSpec`, and validates the body with the registered request model.
 
-If validation fails, FastAPI raises `RequestValidationError`, which can later be converted into a CAP error response by `register_cap_exception_handlers(...)`.
+If validation fails, FastAPI raises `RequestValidationError`, which can later be converted into a CAP error response by `register_cap_exception_handlers(...)`. The exception handler also normalizes validation contexts so embedded Python exception objects become JSON-safe strings.
 
 ### Step 3: execute the handler
 

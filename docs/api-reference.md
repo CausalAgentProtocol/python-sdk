@@ -253,6 +253,7 @@ Server-side error support includes:
 - `register_cap_exception_handlers(...)`
 
 Use `register_cap_exception_handlers(app)` in FastAPI apps so validation and adapter failures are emitted as CAP-compatible error payloads.
+Validation error contexts are sanitized before serialization so embedded Python exception objects remain JSON-safe.
 
 ## Which Entry Point Should You Use?
 

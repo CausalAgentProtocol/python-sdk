@@ -14,6 +14,7 @@ This public changelog starts with the repository documentation and project-metad
 
 ### Fixed
 
+- sanitized FastAPI validation error contexts before serializing CAP error responses, so embedded exception objects no longer break JSON responses
 - checked out the repository in the GitHub Release job so `gh release create --verify-tag` can resolve the local `.git` metadata; the initial `1.0.2` automation published to PyPI successfully but failed while creating the GitHub Release
 
 ## [1.0.2] - 2026-03-23

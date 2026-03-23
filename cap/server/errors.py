@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+from collections.abc import Sequence
+from typing import Any, cast
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -43,11 +44,14 @@ async def extract_cap_request_context(request: Request) -> dict[str, str]:
         payload.get("request_id") if isinstance(payload.get("request_id"), str) else None
     )
     verb = payload.get("verb") if isinstance(payload.get("verb"), str) else "unknown"
-    return {
-        "cap_version": cap_version,
-        "request_id": request_id,
-        "verb": verb,
-    }
+    return cast(
+        dict[str, str],
+        {
+            "cap_version": cap_version,
+            "request_id": request_id,
+            "verb": verb,
+        },
+    )
 
 
 def build_cap_error_response(
@@ -69,6 +73,20 @@ def build_cap_error_response(
             details=details,
         ),
     )
+
+
+def _sanitize_validation_errors(errors: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    sanitized: list[dict[str, Any]] = []
+    for error in errors:
+        item = dict(error)
+        ctx = item.get("ctx")
+        if isinstance(ctx, dict):
+            normalized_ctx: dict[str, Any] = {}
+            for key, value in ctx.items():
+                normalized_ctx[key] = str(value) if isinstance(value, Exception) else value
+            item["ctx"] = normalized_ctx
+        sanitized.append(item)
+    return sanitized
 
 
 def register_cap_exception_handlers(app: FastAPI) -> None:
@@ -93,7 +111,7 @@ def register_cap_exception_handlers(app: FastAPI) -> None:
         return build_cap_error_response(
             status_code=exc.status_code,
             context=context,
-            code=exc.code,
+            code=cast(CAPErrorCode, exc.code),
             message=exc.message,
             details=exc.details,
         )
@@ -106,9 +124,11 @@ def register_cap_exception_handlers(app: FastAPI) -> None:
         return build_cap_error_response(
             status_code=422,
             context=context,
-            code="invalid_request",
+            code=cast(CAPErrorCode, "invalid_request"),
             message="CAP request validation failed.",
-            details={"errors": exc.errors()},
+            details={
+                "errors": _sanitize_validation_errors(cast(Sequence[dict[str, Any]], exc.errors()))
+            },
         )
 
 
