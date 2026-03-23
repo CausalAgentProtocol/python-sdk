@@ -19,5 +19,4 @@ This public changelog starts with the repository documentation and project-metad
 
 - expanded `README.md` into a code-centric project overview with request lifecycle and module responsibilities
 - added development extras, open-source license metadata, and richer project URLs in `pyproject.toml`
-- aligned the package version signal to a pre-1.0 release while the project remains alpha-stage
-- reset the published package version to `0.2.2` while removing the accidental `1.0.0` PyPI release
+- promoted the package version to `1.0.1` for the public PyPI release
