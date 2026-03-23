@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
 import re
 from typing import Any, Literal, Mapping
@@ -191,10 +191,20 @@ class CAPVerbRegistry:
     def verbs_for_surface(self, surface: CAPHandlerSurface) -> list[str]:
         return [verb for verb, spec in self._specs.items() if spec.surface == surface]
 
-    def list_methods(self, surface: CAPHandlerSurface | None = None) -> list[BaseModel]:
+    def list_methods(
+        self,
+        *,
+        verbs: Sequence[str] | None = None,
+        surface: CAPHandlerSurface | None = None,
+        detail: Literal["compact", "full"] = "compact",
+        include_examples: bool = False,
+    ) -> list[BaseModel]:
         from cap.server.introspection import build_method_descriptor
 
         items = self._specs.items()
+        if verbs is not None and len(verbs) > 0:
+            selected_verbs = set(verbs)
+            items = ((verb, spec) for verb, spec in items if verb in selected_verbs)
         if surface is not None:
             items = (
                 (verb, spec) for verb, spec in items if spec.surface == surface
@@ -206,6 +216,8 @@ class CAPVerbRegistry:
                 response_model=spec.response_model,
                 surface=spec.surface,
                 description=spec.description,
+                detail=detail,
+                include_examples=include_examples,
             )
             for verb, spec in sorted(items)
         ]

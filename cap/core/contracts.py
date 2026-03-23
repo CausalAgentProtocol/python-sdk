@@ -28,6 +28,7 @@ class SemanticHonestyFields(BaseModel):
 
 
 ResultT = TypeVar("ResultT")
+MetaMethodDetail = Literal["compact", "full"]
 
 
 class CAPSuccessResponse(CAPResponseBase, Generic[ResultT]):
@@ -80,8 +81,26 @@ class MetaMethodsResult(BaseModel):
     methods: list[CAPMethodDescriptor] = Field(default_factory=list)
 
 
+class MetaMethodsParams(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    verbs: list[str] | None = Field(
+        default=None,
+        description="Specific CAP verbs to describe. Omit or pass an empty list to allow the server to return every supported method.",
+    )
+    detail: MetaMethodDetail = Field(
+        default="compact",
+        description="How much per-field metadata to include in the method description payload.",
+    )
+    include_examples: bool = Field(
+        default=False,
+        description="Whether to include example values in the returned argument and result-field metadata.",
+    )
+
+
 class MetaMethodsRequest(CAPRequestBase):
     verb: Literal["meta.methods"] = "meta.methods"
+    params: MetaMethodsParams | None = None
 
 
 class MetaMethodsResponse(CAPSuccessResponse[MetaMethodsResult]):

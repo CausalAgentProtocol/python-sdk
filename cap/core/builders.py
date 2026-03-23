@@ -10,6 +10,7 @@ from cap.core.capability_card import (
 )
 from cap.core.contracts import (
     MetaMethodsRequest,
+    MetaMethodsParams,
     GraphMarkovBlanketParams,
     GraphMarkovBlanketRequest,
     GraphNeighborsParams,
@@ -54,12 +55,20 @@ def build_meta_capabilities_request(
 
 def build_meta_methods_request(
     *,
+    verbs: Sequence[str] | None = None,
+    detail: Literal["compact", "full"] = "compact",
+    include_examples: bool = False,
     request_id: str | None = None,
     options: CAPRequestOptions | None = None,
 ) -> MetaMethodsRequest:
-    return MetaMethodsRequest(
-        **_request_kwargs(request_id=request_id, options=options, graph_ref=None)
-    )
+    kwargs = _request_kwargs(request_id=request_id, options=options, graph_ref=None)
+    if verbs or detail != "compact" or include_examples:
+        kwargs["params"] = MetaMethodsParams(
+            verbs=list(verbs) if verbs is not None else None,
+            detail=cast(Literal["compact", "full"], detail),
+            include_examples=include_examples,
+        )
+    return MetaMethodsRequest(**kwargs)
 
 
 def build_graph_neighbors_request(

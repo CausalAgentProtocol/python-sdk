@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any, Literal, TypeVar, cast
 
@@ -210,11 +210,20 @@ class AsyncCAPClient:
     async def meta_methods(
         self,
         *,
+        verbs: Sequence[str] | None = None,
+        detail: Literal["compact", "full"] = "compact",
+        include_examples: bool = False,
         request_id: str | None = None,
         options: CAPRequestOptions | None = None,
         headers: Mapping[str, str] | None = None,
     ) -> MetaMethodsResponse:
-        payload = build_meta_methods_request(request_id=request_id, options=options)
+        payload = build_meta_methods_request(
+            verbs=verbs,
+            detail=detail,
+            include_examples=include_examples,
+            request_id=request_id,
+            options=options,
+        )
         return await self.request(payload, MetaMethodsResponse, headers=headers)
 
     async def graph_neighbors(

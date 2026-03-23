@@ -81,7 +81,7 @@ Most request models contain a typed `params` object. Most response models contai
 Request builders are the easiest way to create valid request objects:
 
 - `build_meta_capabilities_request(...)`
-- `build_meta_methods_request(...)`
+- `build_meta_methods_request(verbs=None, detail="compact", include_examples=False, ...)`
 - `build_graph_neighbors_request(...)`
 - `build_graph_markov_blanket_request(...)`
 - `build_graph_paths_request(...)`

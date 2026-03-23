@@ -30,7 +30,16 @@ def test_sanitize_fields_import() -> None:
 
 
 def test_meta_methods_exports() -> None:
-    payload = build_meta_methods_request(request_id="req-methods")
+    payload = build_meta_methods_request(
+        verbs=["graph.paths"],
+        detail="full",
+        include_examples=True,
+        request_id="req-methods",
+    )
 
     assert isinstance(payload, MetaMethodsRequest)
     assert payload.verb == "meta.methods"
+    assert payload.params is not None
+    assert payload.params.verbs == ["graph.paths"]
+    assert payload.params.detail == "full"
+    assert payload.params.include_examples is True
