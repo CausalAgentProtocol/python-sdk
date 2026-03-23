@@ -8,6 +8,20 @@ This public changelog starts with the repository documentation and project-metad
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-03-23
+
+### Added
+
+- `meta.methods` client support, including filtered method lookups
+- automated tag-driven PyPI publishing and GitHub Release creation through GitHub Actions
+- release operations documentation for version bumps, Trusted Publisher setup, and tag-based publishing
+
+### Changed
+
+- documented the repository release flow around immutable version tags instead of branch-tip publishes
+
+## [1.0.1] - 2026-03-20
+
 ### Added
 
 - architecture, API reference, development, and contribution documentation
