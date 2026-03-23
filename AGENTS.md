@@ -1,0 +1,1 @@
+When making change to this repo, remember to update CHANGELOG.md
