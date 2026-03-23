@@ -3,6 +3,7 @@ CAPABILITY_CARD_SCHEMA_URL = "https://causalagentprotocol.org/schema/capability-
 
 CORE_VERBS = (
     "meta.capabilities",
+    "meta.methods",
     "graph.neighbors",
     "graph.markov_blanket",
     "graph.paths",

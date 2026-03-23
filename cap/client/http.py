@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any, Literal, TypeVar, cast
 
@@ -13,6 +13,7 @@ from cap.core.builders import (
     build_graph_paths_request,
     build_intervene_do_request,
     build_meta_capabilities_request,
+    build_meta_methods_request,
     build_observe_predict_request,
     build_traverse_children_request,
     build_traverse_parents_request,
@@ -23,6 +24,7 @@ from cap.core.contracts import (
     GraphPathsResponse,
     InterveneDoResponse,
     MetaCapabilitiesResponse,
+    MetaMethodsResponse,
     ObservePredictResponse,
     TraverseResponse,
 )
@@ -52,6 +54,10 @@ DEFAULT_CLIENT_VERBS = {
     "meta.capabilities": CAPClientVerbSpec(
         builder=build_meta_capabilities_request,
         response_model=MetaCapabilitiesResponse,
+    ),
+    "meta.methods": CAPClientVerbSpec(
+        builder=build_meta_methods_request,
+        response_model=MetaMethodsResponse,
     ),
     "graph.neighbors": CAPClientVerbSpec(
         builder=build_graph_neighbors_request,
@@ -200,6 +206,25 @@ class AsyncCAPClient:
     ) -> MetaCapabilitiesResponse:
         payload = build_meta_capabilities_request(request_id=request_id, options=options)
         return await self.request(payload, MetaCapabilitiesResponse, headers=headers)
+
+    async def meta_methods(
+        self,
+        *,
+        verbs: Sequence[str] | None = None,
+        detail: Literal["compact", "full"] = "compact",
+        include_examples: bool = False,
+        request_id: str | None = None,
+        options: CAPRequestOptions | None = None,
+        headers: Mapping[str, str] | None = None,
+    ) -> MetaMethodsResponse:
+        payload = build_meta_methods_request(
+            verbs=verbs,
+            detail=detail,
+            include_examples=include_examples,
+            request_id=request_id,
+            options=options,
+        )
+        return await self.request(payload, MetaMethodsResponse, headers=headers)
 
     async def graph_neighbors(
         self,

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
 import re
 from typing import Any, Literal, Mapping
@@ -26,6 +26,7 @@ class DispatchSpec:
     response_model: type[BaseModel]
     surface: CAPHandlerSurface
     handler: CAPDispatchHandler
+    description: str | None = None
 
 
 class CAPVerbRegistry:
@@ -39,6 +40,7 @@ class CAPVerbRegistry:
         request_model: type[BaseModel] | None = None,
         response_model: type[BaseModel] | None = None,
         surface: CAPHandlerSurface = "core",
+        description: str | None = None,
     ) -> Callable[
         [CAPDispatchHandler],
         CAPDispatchHandler,
@@ -48,6 +50,7 @@ class CAPVerbRegistry:
                 self.register_core_contract(
                     contract_or_verb,
                     surface=surface,
+                    description=description,
                     handler=handler,
                 )
             else:
@@ -60,6 +63,7 @@ class CAPVerbRegistry:
                     request_model=request_model,
                     response_model=response_model,
                     surface=surface,
+                    description=description,
                     handler=handler,
                 )
             return handler
@@ -73,6 +77,7 @@ class CAPVerbRegistry:
         name: str,
         request_model: type[BaseModel],
         response_model: type[BaseModel],
+        description: str | None = None,
     ) -> Callable[
         [CAPDispatchHandler],
         CAPDispatchHandler,
@@ -83,6 +88,7 @@ class CAPVerbRegistry:
                 name=name,
                 request_model=request_model,
                 response_model=response_model,
+                description=description,
                 handler=handler,
             )
             return handler
@@ -96,6 +102,7 @@ class CAPVerbRegistry:
         request_model: type[BaseModel],
         response_model: type[BaseModel],
         surface: CAPHandlerSurface,
+        description: str | None,
         handler: CAPDispatchHandler,
     ) -> None:
         self._specs[verb] = DispatchSpec(
@@ -103,6 +110,7 @@ class CAPVerbRegistry:
             response_model=response_model,
             surface=surface,
             handler=handler,
+            description=description,
         )
 
     def register_core_verb(
@@ -112,6 +120,7 @@ class CAPVerbRegistry:
         request_model: type[BaseModel],
         response_model: type[BaseModel],
         surface: CAPHandlerSurface = "core",
+        description: str | None = None,
         handler: CAPDispatchHandler,
     ) -> None:
         if verb.startswith("extensions."):
@@ -125,6 +134,7 @@ class CAPVerbRegistry:
             request_model=request_model,
             response_model=response_model,
             surface=surface,
+            description=description,
             handler=handler,
         )
 
@@ -133,6 +143,7 @@ class CAPVerbRegistry:
         contract: CAPVerbContract,
         *,
         surface: CAPHandlerSurface = "core",
+        description: str | None = None,
         handler: CAPDispatchHandler,
     ) -> None:
         self.register_core_verb(
@@ -140,6 +151,7 @@ class CAPVerbRegistry:
             request_model=contract.request_model,
             response_model=contract.response_model,
             surface=surface,
+            description=description if description is not None else contract.description,
             handler=handler,
         )
 
@@ -150,6 +162,7 @@ class CAPVerbRegistry:
         name: str,
         request_model: type[BaseModel],
         response_model: type[BaseModel],
+        description: str | None = None,
         handler: CAPDispatchHandler,
     ) -> str:
         if not _EXTENSION_NAMESPACE_PATTERN.fullmatch(namespace):
@@ -163,6 +176,7 @@ class CAPVerbRegistry:
             request_model=request_model,
             response_model=response_model,
             surface="extension",
+            description=description,
             handler=handler,
         )
         return verb
@@ -176,6 +190,37 @@ class CAPVerbRegistry:
 
     def verbs_for_surface(self, surface: CAPHandlerSurface) -> list[str]:
         return [verb for verb, spec in self._specs.items() if spec.surface == surface]
+
+    def list_methods(
+        self,
+        *,
+        verbs: Sequence[str] | None = None,
+        surface: CAPHandlerSurface | None = None,
+        detail: Literal["compact", "full"] = "compact",
+        include_examples: bool = False,
+    ) -> list[BaseModel]:
+        from cap.server.introspection import build_method_descriptor
+
+        items = self._specs.items()
+        if verbs is not None and len(verbs) > 0:
+            selected_verbs = set(verbs)
+            items = ((verb, spec) for verb, spec in items if verb in selected_verbs)
+        if surface is not None:
+            items = (
+                (verb, spec) for verb, spec in items if spec.surface == surface
+            )
+        return [
+            build_method_descriptor(
+                verb,
+                request_model=spec.request_model,
+                response_model=spec.response_model,
+                surface=spec.surface,
+                description=spec.description,
+                detail=detail,
+                include_examples=include_examples,
+            )
+            for verb, spec in sorted(items)
+        ]
 
     @property
     def extension_verbs_by_namespace(self) -> dict[str, list[str]]:

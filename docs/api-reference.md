@@ -54,6 +54,7 @@ Each first-class verb has a typed request and response model in `cap.core`.
 Included request models:
 
 - `MetaCapabilitiesRequest`
+- `MetaMethodsRequest`
 - `GraphNeighborsRequest`
 - `GraphMarkovBlanketRequest`
 - `GraphPathsRequest`
@@ -65,6 +66,7 @@ Included request models:
 Included response models:
 
 - `MetaCapabilitiesResponse`
+- `MetaMethodsResponse`
 - `GraphNeighborsResponse`
 - `GraphMarkovBlanketResponse`
 - `GraphPathsResponse`
@@ -79,6 +81,7 @@ Most request models contain a typed `params` object. Most response models contai
 Request builders are the easiest way to create valid request objects:
 
 - `build_meta_capabilities_request(...)`
+- `build_meta_methods_request(verbs=None, detail="compact", include_examples=False, ...)`
 - `build_graph_neighbors_request(...)`
 - `build_graph_markov_blanket_request(...)`
 - `build_graph_paths_request(...)`
@@ -157,7 +160,7 @@ Main methods:
 - `request(payload, response_model, headers=None)`
 - `request_verb(...)`
 - `request_route(...)`
-- first-class verb helpers such as `meta_capabilities(...)`, `graph_neighbors(...)`, `observe_predict(...)`, and `intervene_do(...)`
+- first-class verb helpers such as `meta_capabilities(...)`, `meta_methods(...)`, `graph_neighbors(...)`, `observe_predict(...)`, and `intervene_do(...)`
 - `aclose()`
 
 Typical usage pattern:
@@ -176,6 +179,7 @@ The server package exposes contracts, registration, dispatch, provenance helpers
 Verb contracts are exported as constants:
 
 - `META_CAPABILITIES_CONTRACT`
+- `META_METHODS_CONTRACT`
 - `GRAPH_NEIGHBORS_CONTRACT`
 - `GRAPH_MARKOV_BLANKET_CONTRACT`
 - `GRAPH_PATHS_CONTRACT`
