@@ -179,7 +179,7 @@ The registry also enforces naming rules:
 
 The FastAPI dispatcher extracts `payload["verb"]`, finds the matching `DispatchSpec`, and validates the body with the registered request model.
 
-If validation fails, FastAPI raises `RequestValidationError`, which can later be converted into a CAP error response by `register_cap_exception_handlers(...)`.
+If validation fails, FastAPI raises `RequestValidationError`, which can later be converted into a CAP error response by `register_cap_exception_handlers(...)`. The exception handler also normalizes validation contexts so embedded Python exception objects become JSON-safe strings.
 
 ### Step 3: execute the handler
 
@@ -228,7 +228,7 @@ extensions.<namespace>.<name>
 
 This keeps non-standard verbs discoverable and avoids colliding with protocol-defined namespaces.
 
-Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`.
+Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`. Extension namespaces can describe both extra request inputs through `additional_params` and extension-only result fields through `additional_result_fields`.
 
 ## Disclosure Story
 

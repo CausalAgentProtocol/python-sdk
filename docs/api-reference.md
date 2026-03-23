@@ -117,6 +117,8 @@ If you implement `meta.capabilities`, you will usually touch:
 - `CapabilityA2ABinding`
 - `CapabilityExtensionNamespace`
 
+`CapabilityExtensionNamespace` supports both `additional_params` and `additional_result_fields` so capability cards can describe extension-specific request inputs and non-core result fields.
+
 ### Errors and disclosure
 
 Error types:
@@ -251,6 +253,7 @@ Server-side error support includes:
 - `register_cap_exception_handlers(...)`
 
 Use `register_cap_exception_handlers(app)` in FastAPI apps so validation and adapter failures are emitted as CAP-compatible error payloads.
+Validation error contexts are sanitized before serialization so embedded Python exception objects remain JSON-safe.
 
 ## Which Entry Point Should You Use?
 

@@ -84,6 +84,7 @@ class CapabilityExtensionNamespace(BaseModel):
     schema_url: str
     verbs: list[str]
     additional_params: dict[str, dict[str, str]] = Field(default_factory=dict)
+    additional_result_fields: dict[str, dict[str, str]] = Field(default_factory=dict)
     notes: list[str] = Field(default_factory=list)
 
 
