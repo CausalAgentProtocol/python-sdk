@@ -9,6 +9,7 @@ from cap.core.capability_card import (
     CapabilityExtensionNamespace,
 )
 from cap.core.contracts import (
+    MetaMethodsRequest,
     GraphMarkovBlanketParams,
     GraphMarkovBlanketRequest,
     GraphNeighborsParams,
@@ -47,6 +48,16 @@ def build_meta_capabilities_request(
     options: CAPRequestOptions | None = None,
 ) -> MetaCapabilitiesRequest:
     return MetaCapabilitiesRequest(
+        **_request_kwargs(request_id=request_id, options=options, graph_ref=None)
+    )
+
+
+def build_meta_methods_request(
+    *,
+    request_id: str | None = None,
+    options: CAPRequestOptions | None = None,
+) -> MetaMethodsRequest:
+    return MetaMethodsRequest(
         **_request_kwargs(request_id=request_id, options=options, graph_ref=None)
     )
 

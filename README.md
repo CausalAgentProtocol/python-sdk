@@ -78,6 +78,7 @@ asyncio.run(main())
 The client currently provides first-class methods for:
 
 - `meta.capabilities`
+- `meta.methods`
 - `graph.neighbors`
 - `graph.markov_blanket`
 - `graph.paths`

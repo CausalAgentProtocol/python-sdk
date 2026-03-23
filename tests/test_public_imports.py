@@ -4,6 +4,8 @@ from cap.core import (
     ASSUMPTION_LINEARITY,
     ASSUMPTION_NO_INSTANTANEOUS_EFFECTS,
     ASSUMPTION_NO_LATENT_CONFOUNDERS_ADDRESSED,
+    MetaMethodsRequest,
+    build_meta_methods_request,
 )
 from cap.core.disclosure import sanitize_fields
 
@@ -25,3 +27,10 @@ def test_sanitize_fields_import() -> None:
     sanitized = sanitize_fields(payload, forbidden_fields={"secret"})
 
     assert sanitized == {"keep": 1, "nested": [{"keep": 4}]}
+
+
+def test_meta_methods_exports() -> None:
+    payload = build_meta_methods_request(request_id="req-methods")
+
+    assert isinstance(payload, MetaMethodsRequest)
+    assert payload.verb == "meta.methods"

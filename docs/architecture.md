@@ -105,6 +105,8 @@ This is important because it encourages services to disclose how an answer was p
 
 `meta.capabilities` returns a `CapabilityCard` from `cap/core/capability_card.py`.
 
+`meta.methods` returns method descriptors built from the registered request and response models. This keeps runtime discovery aligned with the same typed contracts the dispatcher validates.
+
 The schema is broken into focused submodels:
 
 - provider metadata
