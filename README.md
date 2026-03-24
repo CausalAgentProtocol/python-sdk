@@ -8,7 +8,7 @@ If you are new to CAP itself, start with the [`cap` repository](https://github.c
 
 - [`cap`](https://github.com/CausalAgentProtocol/cap): learn CAP, read the docs, and track the protocol specification
 - [`python-sdk`](https://github.com/CausalAgentProtocol/python-sdk): build CAP clients and CAP-compatible Python servers
-- [`cap-reference`](https://github.com/CausalAgentProtocol/cap-reference): inspect a working reference server that exposes CAP over HTTP
+- [`cap-example`](https://github.com/CausalAgentProtocol/cap-example): inspect the official minimal example server that exposes CAP over HTTP
 
 ## What This SDK Gives You
 
