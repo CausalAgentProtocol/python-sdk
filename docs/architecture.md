@@ -2,6 +2,8 @@
 
 This document explains the repository from the code inward. If you are new to the SDK, start here before reading the API reference.
 
+This SDK currently targets the active CAP `v0.2.2` public surface. The package architecture is organized around the mounted `v0.2.2` verbs and capability-card models that exist in code today; later protocol revisions such as `v0.3.0` should arrive in explicit future SDK releases rather than being inferred from these modules.
+
 ## Design Goals
 
 The SDK has a simple design:
@@ -17,6 +19,8 @@ The SDK has a simple design:
 ### `cap.core`
 
 `cap.core` is the protocol foundation. Everything else depends on it.
+
+For now, that foundation is intentionally the minimal SDK surface needed for `v0.2.2`.
 
 Key modules:
 

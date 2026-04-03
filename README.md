@@ -2,6 +2,8 @@
 
 Official Python SDK for building and integrating CAP-compatible systems.
 
+This SDK currently targets the active CAP `v0.2.2` public surface.
+
 If you are new to CAP itself, start with the [`cap` repository](https://github.com/CausalAgentProtocol/cap) for the protocol overview, getting-started guides, and normative specification. This repository is the Python implementation layer for people who want to call CAP servers or expose CAP-compatible services in Python.
 
 ## Choose The Right Repo
@@ -17,6 +19,8 @@ This repository ships three Python-facing layers that match the code today:
 - `cap.core`: typed CAP envelopes, verb contracts, builders, capability-card models, canonical constants, and error models
 - `cap.client`: an async HTTP client for calling CAP servers through the standard single-entry CAP route
 - `cap.server`: a thin FastAPI adapter for validating requests, dispatching by verb, and returning CAP-shaped responses
+
+It includes typed models and helpers for the mounted `v0.2.2` verbs and capability-card structures. Future protocol versions belong in explicit later releases rather than being inferred from this package, so `v0.3.0` additions are intentionally not exposed here yet.
 
 Use this SDK when you want to:
 
@@ -157,6 +161,8 @@ The implementation in this repository currently includes:
 - canonical constants for reasoning modes, assumptions, mechanism families, and related protocol strings
 - an async `httpx`-based client with CAP error normalization
 - a FastAPI registry and dispatcher that validate both inbound requests and outbound responses
+
+Treat this as a minimal SDK surface for the active `v0.2.2` release line. The docs in this repository describe what the package ships today rather than previewing `v0.3.0` protocol work.
 
 For code-level details, use the docs below rather than treating the README as the full API inventory.
 

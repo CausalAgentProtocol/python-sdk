@@ -2,6 +2,8 @@
 
 This is a hand-written reference for the public SDK surface. It is organized by how you use the package, not by file order.
 
+This SDK currently targets the active CAP `v0.2.2` public surface. It documents the typed models and helpers that the package exposes for mounted `v0.2.2` verbs and capability-card structures, and it intentionally does not infer or pre-document `v0.3.0` additions.
+
 ## Top-Level Package
 
 The top-level `cap` package currently re-exports:
@@ -15,6 +17,8 @@ Use this when you want the smallest possible import surface.
 ## `cap.core`
 
 `cap.core` is the public home for protocol models and helper constants.
+
+Use it as the source of truth for the SDK's current `v0.2.2` protocol surface.
 
 ### Constants and canonical vocabularies
 
