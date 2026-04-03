@@ -51,3 +51,6 @@ include = ["cap", "cap.*"]
 
 [tool.setuptools.package-data]
 cap = ["py.typed"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
