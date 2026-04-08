@@ -2,7 +2,7 @@
 
 This document explains the repository from the code inward. If you are new to the SDK, start here before reading the API reference.
 
-This SDK currently targets the active CAP `v0.2.2` public surface. The package architecture is organized around the mounted `v0.2.2` verbs and capability-card models that exist in code today; later protocol revisions such as `v0.3.0` should arrive in explicit future SDK releases rather than being inferred from these modules.
+This SDK currently targets the active CAP `v0.3.0` public surface. The package architecture is organized around the mounted verbs and capability-card models that exist in code today rather than around speculative future protocol revisions.
 
 ## Design Goals
 
@@ -20,7 +20,7 @@ The SDK has a simple design:
 
 `cap.core` is the protocol foundation. Everything else depends on it.
 
-For now, that foundation is intentionally the minimal SDK surface needed for `v0.2.2`.
+For now, that foundation is intentionally the minimal SDK surface needed for `v0.3.0`.
 
 Key modules:
 
@@ -92,6 +92,8 @@ Successful responses extend `CAPResponseBase` through one of two generic shapes 
 - `CAPProvenancedSuccessResponse[result]`
 
 This pattern keeps the common envelope fields centralized while allowing each verb to attach a typed `result`.
+
+For core verbs, the typed `result` model defines the canonical minimum fields. A server may still return richer additive result fields without breaking typed parsing.
 
 Error responses use `CAPErrorResponse` from `cap/core/errors.py`.
 

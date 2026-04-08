@@ -17,6 +17,8 @@ from cap.core.contracts import (
     MetaCapabilitiesResponse,
     MetaMethodsRequest,
     MetaMethodsResponse,
+    NarrateRequest,
+    NarrateResponse,
     ObservePredictRequest,
     ObservePredictResponse,
     TraverseChildrenRequest,
@@ -44,6 +46,12 @@ META_METHODS_CONTRACT = CAPVerbContract(
     request_model=MetaMethodsRequest,
     response_model=MetaMethodsResponse,
     description="Return machine-readable method metadata for the verbs supported by this CAP endpoint.",
+)
+NARRATE_CONTRACT = CAPVerbContract(
+    verb="narrate",
+    request_model=NarrateRequest,
+    response_model=NarrateResponse,
+    description="Return a narrative causal read for a free-text query.",
 )
 OBSERVE_PREDICT_CONTRACT = CAPVerbContract(
     verb="observe.predict",
@@ -93,6 +101,7 @@ CORE_VERB_CONTRACTS = {
     for contract in (
         META_CAPABILITIES_CONTRACT,
         META_METHODS_CONTRACT,
+        NARRATE_CONTRACT,
         OBSERVE_PREDICT_CONTRACT,
         INTERVENE_DO_CONTRACT,
         GRAPH_NEIGHBORS_CONTRACT,
@@ -112,6 +121,7 @@ __all__ = [
     "INTERVENE_DO_CONTRACT",
     "META_CAPABILITIES_CONTRACT",
     "META_METHODS_CONTRACT",
+    "NARRATE_CONTRACT",
     "OBSERVE_PREDICT_CONTRACT",
     "TRAVERSE_CHILDREN_CONTRACT",
     "TRAVERSE_PARENTS_CONTRACT",

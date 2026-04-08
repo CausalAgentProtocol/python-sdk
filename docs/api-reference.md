@@ -2,7 +2,7 @@
 
 This is a hand-written reference for the public SDK surface. It is organized by how you use the package, not by file order.
 
-This SDK currently targets the active CAP `v0.2.2` public surface. It documents the typed models and helpers that the package exposes for mounted `v0.2.2` verbs and capability-card structures, and it intentionally does not infer or pre-document `v0.3.0` additions.
+This SDK currently targets the active CAP `v0.3.0` public surface. It documents the typed models and helpers that the package exposes for mounted verbs and capability-card structures.
 
 ## Top-Level Package
 
@@ -18,7 +18,7 @@ Use this when you want the smallest possible import surface.
 
 `cap.core` is the public home for protocol models and helper constants.
 
-Use it as the source of truth for the SDK's current `v0.2.2` protocol surface.
+Use it as the source of truth for the SDK's current `v0.3.0` protocol surface.
 
 ### Constants and canonical vocabularies
 
@@ -59,6 +59,7 @@ Included request models:
 
 - `MetaCapabilitiesRequest`
 - `MetaMethodsRequest`
+- `NarrateRequest`
 - `GraphNeighborsRequest`
 - `GraphMarkovBlanketRequest`
 - `GraphPathsRequest`
@@ -71,6 +72,7 @@ Included response models:
 
 - `MetaCapabilitiesResponse`
 - `MetaMethodsResponse`
+- `NarrateResponse`
 - `GraphNeighborsResponse`
 - `GraphMarkovBlanketResponse`
 - `GraphPathsResponse`
@@ -80,12 +82,15 @@ Included response models:
 
 Most request models contain a typed `params` object. Most response models contain a typed `result` object. Traversal responses share a single `TraverseResponse` model with a union literal on `verb`.
 
+For core verbs, the typed response model represents the canonical minimum fields a client can rely on. Servers may still return richer additive result fields, and the typed models ignore those unknown extras unless you inspect the raw payload yourself.
+
 ### Builders
 
 Request builders are the easiest way to create valid request objects:
 
 - `build_meta_capabilities_request(...)`
 - `build_meta_methods_request(verbs=None, detail="compact", include_examples=False, ...)`
+- `build_narrate_request(...)`
 - `build_graph_neighbors_request(...)`
 - `build_graph_markov_blanket_request(...)`
 - `build_graph_paths_request(...)`
@@ -166,7 +171,7 @@ Main methods:
 - `request(payload, response_model, headers=None)`
 - `request_verb(...)`
 - `request_route(...)`
-- first-class verb helpers such as `meta_capabilities(...)`, `meta_methods(...)`, `graph_neighbors(...)`, `observe_predict(...)`, and `intervene_do(...)`
+- first-class verb helpers such as `meta_capabilities(...)`, `meta_methods(...)`, `narrate(...)`, `graph_neighbors(...)`, `observe_predict(...)`, and `intervene_do(...)`
 - `aclose()`
 
 Typical usage pattern:

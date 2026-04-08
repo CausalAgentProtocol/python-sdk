@@ -10,8 +10,8 @@ This public changelog starts with the repository documentation and project-metad
 
 ### Changed
 
-- aligned `README.md`, `docs/api-reference.md`, and `docs/architecture.md` to the active CAP `v0.2.2` public surface that the SDK models today
-- clarified that this docs-first sync intentionally does not introduce or imply CAP `v0.3.0` SDK support
+- aligned `README.md`, `docs/api-reference.md`, and `docs/architecture.md` to the active CAP `v0.3.0` public surface that the SDK models today
+- updated SDK protocol constants and capability-card modeling for the `v0.3.0` release line
 
 ## [1.0.3] - 2026-03-23
 
