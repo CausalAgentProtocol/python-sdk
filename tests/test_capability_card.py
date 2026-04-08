@@ -1,5 +1,8 @@
 from cap.core import build_extension_namespace
-from cap.core.capability_card import CapabilityExtensionNamespace
+from cap.core.capability_card import (
+    CapabilityAuthentication,
+    CapabilityExtensionNamespace,
+)
 
 
 def test_extension_namespace_supports_additional_result_fields() -> None:
@@ -23,3 +26,14 @@ def test_extension_namespace_supports_additional_result_fields() -> None:
         },
         "notes": ["abel-owned"],
     }
+
+
+def test_capability_authentication_accepts_oauth2() -> None:
+    auth = CapabilityAuthentication.model_validate(
+        {
+            "type": "oauth2",
+            "details": {"authorization_url": "https://example.com/oauth/authorize"},
+        }
+    )
+
+    assert auth.type == "oauth2"

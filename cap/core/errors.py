@@ -25,7 +25,7 @@ class CAPErrorBody(BaseModel):
 
 
 class CAPErrorResponse(BaseModel):
-    cap_version: Literal["0.2.2"]
+    cap_version: Literal["0.3.0"]
     request_id: str
     verb: str
     status: Literal["error"] = "error"

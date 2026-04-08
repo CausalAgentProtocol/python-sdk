@@ -9,28 +9,31 @@ from cap.core.constants import CAPABILITY_CARD_SCHEMA_URL, CAP_VERSION
 
 class CapabilityProvider(BaseModel):
     name: str
-    url: str
+    url: str | None = None
 
 
 class CapabilitySupportedVerbs(BaseModel):
     core: list[str]
     convenience: list[str] = Field(default_factory=list)
+    extensions: list[str] = Field(default_factory=list)
 
 
 class CapabilityGraphMetadata(BaseModel):
-    domains: list[str]
-    node_count: int
-    edge_count: int
-    node_types: list[str]
-    edge_types_supported: list[str]
-    graph_representation: str
-    update_frequency: str
+    domains: list[str] = Field(default_factory=list)
+    node_count: int | None = None
+    edge_count: int | None = None
+    node_types: list[str] = Field(default_factory=list)
+    edge_types_supported: list[str] = Field(default_factory=list)
+    graph_representation: str | None = None
+    update_frequency: str | None = None
     temporal_resolution: str | None = None
-    coverage_description: str
+    coverage_description: str | None = None
+    availability: str | None = None
+    scope: str | None = None
 
 
 class CapabilityAuthentication(BaseModel):
-    type: Literal["none", "api_key"]
+    type: Literal["none", "api_key", "oauth2"]
     details: dict[str, str] = Field(default_factory=dict)
 
 
@@ -75,13 +78,13 @@ class CapabilityAccessTier(BaseModel):
 
 
 class CapabilityDisclosurePolicy(BaseModel):
-    hidden_fields: list[str]
-    default_response_detail: Literal["summary", "full", "raw"]
-    notes: list[str]
+    hidden_fields: list[str] = Field(default_factory=list)
+    default_response_detail: Literal["summary", "full", "raw"] = "summary"
+    notes: list[str] = Field(default_factory=list)
 
 
 class CapabilityExtensionNamespace(BaseModel):
-    schema_url: str
+    schema_url: str | None = None
     verbs: list[str]
     additional_params: dict[str, dict[str, str]] = Field(default_factory=dict)
     additional_result_fields: dict[str, dict[str, str]] = Field(default_factory=dict)
@@ -104,25 +107,27 @@ class CapabilityBindings(BaseModel):
 
 
 class CapabilityCard(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
 
     schema_url: str = Field(default=CAPABILITY_CARD_SCHEMA_URL, alias="$schema")
     name: str
     description: str
-    version: str
-    cap_spec_version: Literal["0.2.2"] = CAP_VERSION
-    provider: CapabilityProvider
+    version: str | None = None
+    cap_spec_version: Literal["0.3.0"] = CAP_VERSION
+    provider: CapabilityProvider | None = None
     endpoint: str
-    conformance_level: Literal[1, 2]
+    conformance_level: Literal[0, 0.5, 1, 2]
+    conformance_name: Literal["Narrative", "Hybrid", "Observe", "Intervene"]
+    pearl_alignment: Literal["below_pearl", "partial_rung_1", "rung_1", "rung_2"] | None = None
     supported_verbs: CapabilitySupportedVerbs
     causal_engine: CapabilityCausalEngine | None = None
     detailed_capabilities: CapabilityDetailedCapabilities | None = None
-    assumptions: list[str]
-    reasoning_modes_supported: list[str]
+    assumptions: list[str] = Field(default_factory=list)
+    reasoning_modes_supported: list[str] = Field(default_factory=list)
     graph: CapabilityGraphMetadata
     authentication: CapabilityAuthentication
     access_tiers: list[CapabilityAccessTier] = Field(default_factory=list)
-    disclosure_policy: CapabilityDisclosurePolicy
+    disclosure_policy: CapabilityDisclosurePolicy = Field(default_factory=CapabilityDisclosurePolicy)
     bindings: CapabilityBindings | None = None
     extensions: dict[str, CapabilityExtensionNamespace] = Field(default_factory=dict)
 

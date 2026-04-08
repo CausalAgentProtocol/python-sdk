@@ -18,7 +18,7 @@ class CAPProvenance(BaseModel):
     mechanism_model_version: str | None = None
     server_name: str
     server_version: str
-    cap_spec_version: Literal["0.2.2"]
+    cap_spec_version: Literal["0.3.0"]
 
 
 class SemanticHonestyFields(BaseModel):
@@ -105,6 +105,37 @@ class MetaMethodsRequest(CAPRequestBase):
 
 class MetaMethodsResponse(CAPSuccessResponse[MetaMethodsResult]):
     verb: Literal["meta.methods"] = "meta.methods"
+
+
+class NarrateParams(BaseModel):
+    query: Annotated[
+        str,
+        Field(
+            min_length=1,
+            description="Free-text query for a narrative read.",
+            json_schema_extra={"examples": ["Why is NVDA moving?"]},
+        ),
+    ]
+
+
+class NarrateRequest(CAPRequestBase):
+    verb: Literal["narrate"] = "narrate"
+    params: NarrateParams
+
+
+class NarrateResult(BaseModel):
+    narrative: Annotated[
+        str,
+        Field(description="Primary narrative summary returned by the server."),
+    ]
+    reasoning_mode: str | None = None
+    identification_status: str | None = None
+    assumptions: list[str] = Field(default_factory=list)
+
+
+class NarrateResponse(CAPSuccessResponse[NarrateResult]):
+    verb: Literal["narrate"] = "narrate"
+    provenance: CAPProvenance | None = None
 
 
 class ObservePredictParams(BaseModel):

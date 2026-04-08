@@ -23,14 +23,14 @@ class CAPRequestOptions(BaseModel):
 
 
 class CAPRequestBase(BaseModel):
-    cap_version: Literal["0.2.2"] = CAP_VERSION
+    cap_version: Literal["0.3.0"] = CAP_VERSION
     request_id: str | None = None
     context: CAPRequestContext | None = None
     options: CAPRequestOptions = Field(default_factory=CAPRequestOptions)
 
 
 class CAPResponseBase(BaseModel):
-    cap_version: Literal["0.2.2"] = CAP_VERSION
+    cap_version: Literal["0.3.0"] = CAP_VERSION
     request_id: str
     verb: str
     status: Literal["success", "error"]
