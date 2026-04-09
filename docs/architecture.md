@@ -234,7 +234,7 @@ extensions.<namespace>.<name>
 
 This keeps non-standard verbs discoverable and avoids colliding with protocol-defined namespaces.
 
-Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`. Those namespace entries are summary disclosure only; field-level request and result metadata belongs in `meta.methods`.
+Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`. Compact capability-card output keeps those namespace entries summary-level. Legacy field-level extension metadata is still accepted for compatibility, but detailed request and result metadata belongs in `meta.methods`.
 
 ## Disclosure Story
 

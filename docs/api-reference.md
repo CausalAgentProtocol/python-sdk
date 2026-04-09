@@ -126,7 +126,7 @@ If you implement `meta.capabilities`, you will usually touch:
 - `CapabilityA2ABinding`
 - `CapabilityExtensionNamespace`
 
-`CapabilityExtensionNamespace` is the summary-level capability-card container for one extension namespace: namespace-scoped verbs, optional schema URL, and short notes.
+`CapabilityExtensionNamespace` is the capability-card container for one extension namespace. Compact capability-card output treats it as summary-level disclosure: namespace-scoped verbs, optional schema URL, and short notes. Legacy field-level extension metadata remains supported for compatibility, but `meta.methods` is the preferred detailed discovery surface.
 
 ### Errors and disclosure
 

@@ -8,10 +8,14 @@ from cap.core.capability_card import (
 )
 
 
-def test_extension_namespace_is_summary_only() -> None:
+def test_extension_namespace_supports_legacy_field_metadata() -> None:
     namespace = build_extension_namespace(
         schema_url="https://abel.ai/cap/extensions/abel/v1.json",
         verbs=["extensions.abel.observe_predict_resolved_time"],
+        additional_params={"graph.paths": {"include_edge_signs": "boolean"}},
+        additional_result_fields={
+            "extensions.abel.observe_predict_resolved_time": {"resolved_target_time": "string"}
+        },
         notes=["abel-owned"],
     )
 
@@ -19,6 +23,10 @@ def test_extension_namespace_is_summary_only() -> None:
     assert namespace.model_dump() == {
         "schema_url": "https://abel.ai/cap/extensions/abel/v1.json",
         "verbs": ["extensions.abel.observe_predict_resolved_time"],
+        "additional_params": {"graph.paths": {"include_edge_signs": "boolean"}},
+        "additional_result_fields": {
+            "extensions.abel.observe_predict_resolved_time": {"resolved_target_time": "string"}
+        },
         "notes": ["abel-owned"],
     }
 
@@ -43,6 +51,7 @@ def test_capability_card_compact_dump_omits_empty_optional_groups() -> None:
         conformance_name="Observe",
         supported_verbs=CapabilitySupportedVerbs(
             core=["meta.capabilities", "meta.methods", "observe.predict"],
+            extensions=["extensions.abel.stateful.search_prepare"],
         ),
         assumptions=["stationarity"],
         reasoning_modes_supported=["observational_prediction"],
@@ -55,6 +64,9 @@ def test_capability_card_compact_dump_omits_empty_optional_groups() -> None:
             "abel.stateful": build_extension_namespace(
                 schema_url="https://abel.ai/cap/extensions/abel/v1.json",
                 verbs=["extensions.abel.stateful.search_prepare"],
+                additional_result_fields={
+                    "extensions.abel.stateful.search_prepare": {"session_handle": "string"}
+                },
             )
         },
     )
@@ -71,3 +83,24 @@ def test_capability_card_compact_dump_omits_empty_optional_groups() -> None:
     assert "access_tiers" not in dumped
     assert "bindings" not in dumped
     assert "disclosure_policy" not in dumped
+
+
+def test_capability_card_back_compat_accepts_supported_extensions_inventory() -> None:
+    card = CapabilityCard(
+        name="Example CAP Server",
+        description="Back-compat capability card example.",
+        endpoint="https://example.com/cap",
+        conformance_level=1,
+        conformance_name="Observe",
+        supported_verbs=CapabilitySupportedVerbs(
+            core=["meta.capabilities"],
+            extensions=["extensions.abel.stateful.search_prepare"],
+        ),
+        assumptions=["stationarity"],
+        reasoning_modes_supported=["observational_prediction"],
+        graph=CapabilityGraphMetadata(domains=["operations"]),
+        authentication=CapabilityAuthentication(type="none"),
+    )
+
+    dumped = card.model_dump(exclude_none=True)
+    assert dumped["supported_verbs"]["extensions"] == ["extensions.abel.stateful.search_prepare"]
