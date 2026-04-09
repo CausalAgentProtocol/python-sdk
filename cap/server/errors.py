@@ -38,7 +38,7 @@ async def extract_cap_request_context(request: Request) -> dict[str, str]:
             payload = {}
 
     cap_version = (
-        payload.get("cap_version") if isinstance(payload.get("cap_version"), str) else "0.2.2"
+        payload.get("cap_version") if isinstance(payload.get("cap_version"), str) else "0.3.0"
     )
     request_id = normalize_request_id(
         payload.get("request_id") if isinstance(payload.get("request_id"), str) else None

@@ -2,6 +2,8 @@
 
 This document explains the repository from the code inward. If you are new to the SDK, start here before reading the API reference.
 
+This SDK currently targets the active CAP `v0.3.0` public surface. The package architecture is organized around the mounted verbs and capability-card models that exist in code today rather than around speculative future protocol revisions.
+
 ## Design Goals
 
 The SDK has a simple design:
@@ -17,6 +19,8 @@ The SDK has a simple design:
 ### `cap.core`
 
 `cap.core` is the protocol foundation. Everything else depends on it.
+
+For now, that foundation is intentionally the minimal SDK surface needed for `v0.3.0`.
 
 Key modules:
 
@@ -88,6 +92,8 @@ Successful responses extend `CAPResponseBase` through one of two generic shapes 
 - `CAPProvenancedSuccessResponse[result]`
 
 This pattern keeps the common envelope fields centralized while allowing each verb to attach a typed `result`.
+
+For core verbs, the typed `result` model defines the canonical minimum fields. A server may still return richer additive result fields without breaking typed parsing.
 
 Error responses use `CAPErrorResponse` from `cap/core/errors.py`.
 
@@ -228,7 +234,7 @@ extensions.<namespace>.<name>
 
 This keeps non-standard verbs discoverable and avoids colliding with protocol-defined namespaces.
 
-Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`. Extension namespaces can describe both extra request inputs through `additional_params` and extension-only result fields through `additional_result_fields`.
+Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`. Compact capability-card output keeps those namespace entries summary-level. Legacy field-level extension metadata is still accepted for compatibility, but detailed request and result metadata belongs in `meta.methods`.
 
 ## Disclosure Story
 

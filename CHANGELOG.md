@@ -8,6 +8,18 @@ This public changelog starts with the repository documentation and project-metad
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-04-09
+
+### Changed
+
+- aligned `README.md`, `docs/api-reference.md`, and `docs/architecture.md` to the active CAP `v0.3.0` public surface that the SDK models today
+- updated SDK protocol constants and capability-card modeling for the `v0.3.0` release line
+- compact capability-card output now omits redundant extension inventory and extension field metadata, while the legacy capability-card fields remain supported in the typed models for compatibility
+
+### Added
+
+- preserved provider-specific richer fields on typed `narrate`, `observe.predict`, and `intervene.do` responses so response validation no longer drops extra result metadata during round-trip serialization
+
 ## [1.0.3] - 2026-03-23
 
 ### Added

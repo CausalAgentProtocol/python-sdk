@@ -1,8 +1,14 @@
 from cap.core import build_extension_namespace
-from cap.core.capability_card import CapabilityExtensionNamespace
+from cap.core.capability_card import (
+    CapabilityAuthentication,
+    CapabilityCard,
+    CapabilityExtensionNamespace,
+    CapabilityGraphMetadata,
+    CapabilitySupportedVerbs,
+)
 
 
-def test_extension_namespace_supports_additional_result_fields() -> None:
+def test_extension_namespace_supports_legacy_field_metadata() -> None:
     namespace = build_extension_namespace(
         schema_url="https://abel.ai/cap/extensions/abel/v1.json",
         verbs=["extensions.abel.observe_predict_resolved_time"],
@@ -23,3 +29,78 @@ def test_extension_namespace_supports_additional_result_fields() -> None:
         },
         "notes": ["abel-owned"],
     }
+
+
+def test_capability_authentication_accepts_oauth2() -> None:
+    auth = CapabilityAuthentication.model_validate(
+        {
+            "type": "oauth2",
+            "details": {"authorization_url": "https://example.com/oauth/authorize"},
+        }
+    )
+
+    assert auth.type == "oauth2"
+
+
+def test_capability_card_compact_dump_omits_empty_optional_groups() -> None:
+    card = CapabilityCard(
+        name="Example CAP Server",
+        description="Compact capability card example.",
+        endpoint="https://example.com/cap",
+        conformance_level=1,
+        conformance_name="Observe",
+        supported_verbs=CapabilitySupportedVerbs(
+            core=["meta.capabilities", "meta.methods", "observe.predict"],
+            extensions=["extensions.abel.stateful.search_prepare"],
+        ),
+        assumptions=["stationarity"],
+        reasoning_modes_supported=["observational_prediction"],
+        graph=CapabilityGraphMetadata(
+            domains=["operations"],
+            graph_representation="time_lagged_dag",
+        ),
+        authentication=CapabilityAuthentication(type="none"),
+        extensions={
+            "abel.stateful": build_extension_namespace(
+                schema_url="https://abel.ai/cap/extensions/abel/v1.json",
+                verbs=["extensions.abel.stateful.search_prepare"],
+                additional_result_fields={
+                    "extensions.abel.stateful.search_prepare": {"session_handle": "string"}
+                },
+            )
+        },
+    )
+
+    dumped = card.model_dump_compact(by_alias=True)
+
+    assert dumped["supported_verbs"] == {
+        "core": ["meta.capabilities", "meta.methods", "observe.predict"]
+    }
+    assert dumped["extensions"]["abel.stateful"] == {
+        "schema_url": "https://abel.ai/cap/extensions/abel/v1.json",
+        "verbs": ["extensions.abel.stateful.search_prepare"],
+    }
+    assert "access_tiers" not in dumped
+    assert "bindings" not in dumped
+    assert "disclosure_policy" not in dumped
+
+
+def test_capability_card_back_compat_accepts_supported_extensions_inventory() -> None:
+    card = CapabilityCard(
+        name="Example CAP Server",
+        description="Back-compat capability card example.",
+        endpoint="https://example.com/cap",
+        conformance_level=1,
+        conformance_name="Observe",
+        supported_verbs=CapabilitySupportedVerbs(
+            core=["meta.capabilities"],
+            extensions=["extensions.abel.stateful.search_prepare"],
+        ),
+        assumptions=["stationarity"],
+        reasoning_modes_supported=["observational_prediction"],
+        graph=CapabilityGraphMetadata(domains=["operations"]),
+        authentication=CapabilityAuthentication(type="none"),
+    )
+
+    dumped = card.model_dump(exclude_none=True)
+    assert dumped["supported_verbs"]["extensions"] == ["extensions.abel.stateful.search_prepare"]

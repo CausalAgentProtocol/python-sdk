@@ -20,6 +20,8 @@ from cap.core.contracts import (
     InterveneDoParams,
     InterveneDoRequest,
     MetaCapabilitiesRequest,
+    NarrateParams,
+    NarrateRequest,
     ObservePredictParams,
     ObservePredictRequest,
     TraverseParams,
@@ -69,6 +71,17 @@ def build_meta_methods_request(
             include_examples=include_examples,
         )
     return MetaMethodsRequest(**kwargs)
+
+
+def build_narrate_request(
+    *,
+    query: str,
+    request_id: str | None = None,
+    options: CAPRequestOptions | None = None,
+) -> NarrateRequest:
+    kwargs = _request_kwargs(request_id=request_id, options=options, graph_ref=None)
+    kwargs["params"] = NarrateParams(query=query)
+    return NarrateRequest(**kwargs)
 
 
 def build_graph_neighbors_request(

@@ -2,6 +2,8 @@
 
 This is a hand-written reference for the public SDK surface. It is organized by how you use the package, not by file order.
 
+This SDK currently targets the active CAP `v0.3.0` public surface. It documents the typed models and helpers that the package exposes for mounted verbs and capability-card structures.
+
 ## Top-Level Package
 
 The top-level `cap` package currently re-exports:
@@ -15,6 +17,8 @@ Use this when you want the smallest possible import surface.
 ## `cap.core`
 
 `cap.core` is the public home for protocol models and helper constants.
+
+Use it as the source of truth for the SDK's current `v0.3.0` protocol surface.
 
 ### Constants and canonical vocabularies
 
@@ -55,6 +59,7 @@ Included request models:
 
 - `MetaCapabilitiesRequest`
 - `MetaMethodsRequest`
+- `NarrateRequest`
 - `GraphNeighborsRequest`
 - `GraphMarkovBlanketRequest`
 - `GraphPathsRequest`
@@ -67,6 +72,7 @@ Included response models:
 
 - `MetaCapabilitiesResponse`
 - `MetaMethodsResponse`
+- `NarrateResponse`
 - `GraphNeighborsResponse`
 - `GraphMarkovBlanketResponse`
 - `GraphPathsResponse`
@@ -76,12 +82,15 @@ Included response models:
 
 Most request models contain a typed `params` object. Most response models contain a typed `result` object. Traversal responses share a single `TraverseResponse` model with a union literal on `verb`.
 
+For core verbs, the typed response model represents the canonical minimum fields a client can rely on. Servers may still return richer additive result fields, and the typed models ignore those unknown extras unless you inspect the raw payload yourself.
+
 ### Builders
 
 Request builders are the easiest way to create valid request objects:
 
 - `build_meta_capabilities_request(...)`
 - `build_meta_methods_request(verbs=None, detail="compact", include_examples=False, ...)`
+- `build_narrate_request(...)`
 - `build_graph_neighbors_request(...)`
 - `build_graph_markov_blanket_request(...)`
 - `build_graph_paths_request(...)`
@@ -117,7 +126,7 @@ If you implement `meta.capabilities`, you will usually touch:
 - `CapabilityA2ABinding`
 - `CapabilityExtensionNamespace`
 
-`CapabilityExtensionNamespace` supports both `additional_params` and `additional_result_fields` so capability cards can describe extension-specific request inputs and non-core result fields.
+`CapabilityExtensionNamespace` is the capability-card container for one extension namespace. Compact capability-card output treats it as summary-level disclosure: namespace-scoped verbs, optional schema URL, and short notes. Legacy field-level extension metadata remains supported for compatibility, but `meta.methods` is the preferred detailed discovery surface.
 
 ### Errors and disclosure
 
@@ -162,7 +171,7 @@ Main methods:
 - `request(payload, response_model, headers=None)`
 - `request_verb(...)`
 - `request_route(...)`
-- first-class verb helpers such as `meta_capabilities(...)`, `meta_methods(...)`, `graph_neighbors(...)`, `observe_predict(...)`, and `intervene_do(...)`
+- first-class verb helpers such as `meta_capabilities(...)`, `meta_methods(...)`, `narrate(...)`, `graph_neighbors(...)`, `observe_predict(...)`, and `intervene_do(...)`
 - `aclose()`
 
 Typical usage pattern:

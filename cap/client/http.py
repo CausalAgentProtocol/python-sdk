@@ -14,6 +14,7 @@ from cap.core.builders import (
     build_intervene_do_request,
     build_meta_capabilities_request,
     build_meta_methods_request,
+    build_narrate_request,
     build_observe_predict_request,
     build_traverse_children_request,
     build_traverse_parents_request,
@@ -25,6 +26,7 @@ from cap.core.contracts import (
     InterveneDoResponse,
     MetaCapabilitiesResponse,
     MetaMethodsResponse,
+    NarrateResponse,
     ObservePredictResponse,
     TraverseResponse,
 )
@@ -58,6 +60,10 @@ DEFAULT_CLIENT_VERBS = {
     "meta.methods": CAPClientVerbSpec(
         builder=build_meta_methods_request,
         response_model=MetaMethodsResponse,
+    ),
+    "narrate": CAPClientVerbSpec(
+        builder=build_narrate_request,
+        response_model=NarrateResponse,
     ),
     "graph.neighbors": CAPClientVerbSpec(
         builder=build_graph_neighbors_request,
@@ -225,6 +231,21 @@ class AsyncCAPClient:
             options=options,
         )
         return await self.request(payload, MetaMethodsResponse, headers=headers)
+
+    async def narrate(
+        self,
+        *,
+        query: str,
+        request_id: str | None = None,
+        options: CAPRequestOptions | None = None,
+        headers: Mapping[str, str] | None = None,
+    ) -> NarrateResponse:
+        payload = build_narrate_request(
+            query=query,
+            request_id=request_id,
+            options=options,
+        )
+        return await self.request(payload, NarrateResponse, headers=headers)
 
     async def graph_neighbors(
         self,

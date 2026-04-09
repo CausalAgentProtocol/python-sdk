@@ -29,7 +29,7 @@ def test_validation_errors_are_json_safe() -> None:
     response = client.post(
         "/cap",
         json={
-            "cap_version": "0.2.2",
+            "cap_version": "0.3.0",
             "request_id": "req-validate",
             "verb": "graph.paths",
             "count": 0,
