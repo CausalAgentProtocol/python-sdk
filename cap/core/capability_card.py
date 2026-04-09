@@ -15,7 +15,6 @@ class CapabilityProvider(BaseModel):
 class CapabilitySupportedVerbs(BaseModel):
     core: list[str]
     convenience: list[str] = Field(default_factory=list)
-    extensions: list[str] = Field(default_factory=list)
 
 
 class CapabilityGraphMetadata(BaseModel):
@@ -86,8 +85,6 @@ class CapabilityDisclosurePolicy(BaseModel):
 class CapabilityExtensionNamespace(BaseModel):
     schema_url: str | None = None
     verbs: list[str]
-    additional_params: dict[str, dict[str, str]] = Field(default_factory=dict)
-    additional_result_fields: dict[str, dict[str, str]] = Field(default_factory=dict)
     notes: list[str] = Field(default_factory=list)
 
 
@@ -136,7 +133,7 @@ class CapabilityCard(BaseModel):
 
         supported_verbs = payload.get("supported_verbs")
         if isinstance(supported_verbs, dict):
-            for key in ("convenience", "extensions"):
+            for key in ("convenience",):
                 if supported_verbs.get(key) == []:
                     supported_verbs.pop(key, None)
 
@@ -144,7 +141,7 @@ class CapabilityCard(BaseModel):
         if isinstance(extensions, dict):
             for namespace_payload in extensions.values():
                 if isinstance(namespace_payload, dict):
-                    for key in ("additional_params", "additional_result_fields", "notes"):
+                    for key in ("notes",):
                         if namespace_payload.get(key) == {} or namespace_payload.get(key) == []:
                             namespace_payload.pop(key, None)
             if not extensions:

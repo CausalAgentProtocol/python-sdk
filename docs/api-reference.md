@@ -126,7 +126,7 @@ If you implement `meta.capabilities`, you will usually touch:
 - `CapabilityA2ABinding`
 - `CapabilityExtensionNamespace`
 
-`CapabilityExtensionNamespace` supports both `additional_params` and `additional_result_fields` so capability cards can describe extension-specific request inputs and non-core result fields.
+`CapabilityExtensionNamespace` is the summary-level capability-card container for one extension namespace: namespace-scoped verbs, optional schema URL, and short notes.
 
 ### Errors and disclosure
 

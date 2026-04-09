@@ -234,7 +234,7 @@ extensions.<namespace>.<name>
 
 This keeps non-standard verbs discoverable and avoids colliding with protocol-defined namespaces.
 
-Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`. Extension namespaces can describe both extra request inputs through `additional_params` and extension-only result fields through `additional_result_fields`.
+Capability-card support for extensions lives in `CapabilityExtensionNamespace` and the `extensions` field on `CapabilityCard`. Those namespace entries are summary disclosure only; field-level request and result metadata belongs in `meta.methods`.
 
 ## Disclosure Story
 
