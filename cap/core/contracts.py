@@ -124,6 +124,8 @@ class NarrateRequest(CAPRequestBase):
 
 
 class NarrateResult(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
     narrative: Annotated[
         str,
         Field(description="Primary narrative summary returned by the server."),
@@ -155,6 +157,8 @@ class ObservePredictRequest(CAPRequestBase):
 
 
 class ObservePredictResult(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
     target_node: Annotated[
         str,
         Field(description="Node identifier that the returned prediction corresponds to."),
@@ -208,6 +212,8 @@ class InterveneDoRequest(CAPRequestBase):
 
 
 class InterveneDoResult(SemanticHonestyFields):
+    model_config = ConfigDict(extra="allow")
+
     outcome_node: Annotated[
         str,
         Field(description="Outcome node identifier that the reported effect refers to."),

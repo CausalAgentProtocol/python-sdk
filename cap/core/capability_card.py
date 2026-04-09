@@ -131,6 +131,42 @@ class CapabilityCard(BaseModel):
     bindings: CapabilityBindings | None = None
     extensions: dict[str, CapabilityExtensionNamespace] = Field(default_factory=dict)
 
+    def model_dump_compact(self, *, by_alias: bool = False) -> dict[str, object]:
+        payload = self.model_dump(exclude_none=True, by_alias=by_alias)
+
+        supported_verbs = payload.get("supported_verbs")
+        if isinstance(supported_verbs, dict):
+            for key in ("convenience", "extensions"):
+                if supported_verbs.get(key) == []:
+                    supported_verbs.pop(key, None)
+
+        extensions = payload.get("extensions")
+        if isinstance(extensions, dict):
+            for namespace_payload in extensions.values():
+                if isinstance(namespace_payload, dict):
+                    for key in ("additional_params", "additional_result_fields", "notes"):
+                        if namespace_payload.get(key) == {} or namespace_payload.get(key) == []:
+                            namespace_payload.pop(key, None)
+            if not extensions:
+                payload.pop("extensions", None)
+
+        if payload.get("access_tiers") == []:
+            payload.pop("access_tiers", None)
+
+        disclosure_policy = payload.get("disclosure_policy")
+        if disclosure_policy == {
+            "hidden_fields": [],
+            "default_response_detail": "summary",
+            "notes": [],
+        }:
+            payload.pop("disclosure_policy", None)
+
+        bindings = payload.get("bindings")
+        if bindings == {}:
+            payload.pop("bindings", None)
+
+        return payload
+
 
 __all__ = [
     "CapabilityAccessTier",
